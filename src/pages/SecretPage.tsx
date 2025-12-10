@@ -47,7 +47,7 @@ const SecretPage = () => {
 
             <div className="flex-1 flex flex-col">
               <p className="text-base font-semibold text-muted-foreground">
-                ENTERPRISE
+                Warroom
               </p>
               <div className="mt-6 flex items-center justify-center gap-x-2">
                 <span className="text-5xl font-bold tracking-tight text-foreground">
@@ -84,10 +84,10 @@ const SecretPage = () => {
                   "bg-primary text-primary-foreground"
                 )}
               >
-                Contact Sales
+                Contact Team
               </Link>
               <p className="mt-6 text-xs leading-5 text-muted-foreground">
-                For those who found the secret
+                For those who found the secret, no refund faggots (its going to charity)
               </p>
             </div>
           </motion.div>

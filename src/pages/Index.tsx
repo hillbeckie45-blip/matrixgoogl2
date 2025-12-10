@@ -2,22 +2,25 @@ import { MatrixRipple } from "@/components/ui/matrix-ripple";
 import { Countdown } from "@/components/ui/countdown";
 import { ShinyButton } from "@/components/ui/shiny-button";
 import { LeverSwitch } from "@/components/ui/lever-switch";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Play } from "lucide-react";
+import { useAudio } from "@/contexts/AudioContext";
 
 const Index = () => {
-  const [started, setStarted] = useState(false);
   const [countdownComplete, setCountdownComplete] = useState(false);
   const navigate = useNavigate();
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const { play, hasStarted, setHasStarted } = useAudio();
+
+  // Reset state when component mounts (coming back to home)
+  useEffect(() => {
+    setCountdownComplete(false);
+  }, []);
 
   const handleStart = () => {
-    setStarted(true);
-    if (audioRef.current) {
-      audioRef.current.play();
-    }
+    setHasStarted(true);
+    play();
   };
 
   return (
@@ -27,7 +30,7 @@ const Index = () => {
       {/* Centered content */}
       <div className="fixed inset-0 flex items-center justify-center z-20 pointer-events-none">
         <AnimatePresence mode="wait">
-          {!started ? (
+          {!hasStarted ? (
             <motion.button
               key="play"
               initial={{ opacity: 0, scale: 0.8 }}
@@ -48,7 +51,7 @@ const Index = () => {
               transition={{ duration: 0.5 }}
             >
               <Countdown
-                start={22}
+                start={21}
                 onComplete={() => setCountdownComplete(true)}
               />
             </motion.div>
@@ -62,7 +65,7 @@ const Index = () => {
             >
               <ShinyButton
                 onClick={() => navigate('/pricing')}
-                className="text-2xl px-8 py-4 text-foreground"
+                className="text-2xl px-8 py-4 text-white"
               >
                 ;)
               </ShinyButton>
@@ -80,7 +83,7 @@ const Index = () => {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="fixed bottom-6 left-6 z-50"
           >
-            <LeverSwitch onToggle={() => navigate('/secret')} />
+            <LeverSwitch onToggle={() => navigate('/secret')} hideButton />
           </motion.div>
         )}
       </AnimatePresence>
