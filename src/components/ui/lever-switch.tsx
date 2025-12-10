@@ -3,9 +3,10 @@ import { cn } from "@/lib/utils";
 interface LeverSwitchProps {
   className?: string;
   onToggle?: () => void;
+  hideButton?: boolean;
 }
 
-export const LeverSwitch = ({ className, onToggle }: LeverSwitchProps) => {
+export const LeverSwitch = ({ className, onToggle, hideButton = false }: LeverSwitchProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.checked && onToggle) {
       setTimeout(onToggle, 300);
@@ -103,6 +104,10 @@ export const LeverSwitch = ({ className, onToggle }: LeverSwitchProps) => {
           border-radius: 3px;
           box-shadow: inset 0 2px 4px hsl(var(--foreground)/20%);
         }
+
+        .toggle-base-hidden {
+          display: none;
+        }
       `}</style>
 
       <input className="toggle-input" type="checkbox" onChange={handleChange} />
@@ -114,7 +119,7 @@ export const LeverSwitch = ({ className, onToggle }: LeverSwitchProps) => {
           </div>
         </div>
       </div>
-      <div className="toggle-base">
+      <div className={cn("toggle-base", hideButton && "toggle-base-hidden")}>
         <div className="toggle-base-inside"></div>
       </div>
     </div>
